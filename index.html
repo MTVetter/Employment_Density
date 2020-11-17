@@ -1,0 +1,175 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+        <title>Employment Density</title>
+        <link rel="stylesheet" href="https://js.arcgis.com/4.16/esri/themes/light/main.css">
+        <link rel="stylesheet" href="app/main.css">
+
+        <link rel="stylesheet" href="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/css/calcite-web.min.css">
+        <script src="https://s3-us-west-1.amazonaws.com/patterns.esri.com/files/calcite-web/1.2.5/js/calcite-web.min.js"></script>
+
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.css" integrity="sha256-IvM9nJf/b5l2RoebiFno92E5ONttVyaEEsdemDC6iQA=" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script> -->
+
+        <script>
+            var locationPath = location.pathname.replace(/\/[^/]+$/, "");
+            window.dojoConfig = {
+                packages: [
+                    {
+                        name: "app",
+                        location: locationPath + "/app"
+                    }
+                ]
+            };
+        </script>
+        <script src="https://js.arcgis.com/4.16/"></script>
+    </head>
+    <body>
+        <div id="viewDiv"></div>
+        <div id="info" class="esri-expand__content esri-expand__content--expanded">
+            <div id="job-label">
+                <div id="date-label">
+                    <span class="header" id="display-date">Jobs Displayed:</span>
+                </div>
+                <span class="count" id="jobs"></span>
+                <span class="count" id="jobs2"></span>
+            </div>
+        </div>
+        <div id="ui-controls" class="esri-widget">
+            <div id="subtitleDiv" class="esri-widget">
+                Select a county to filter jobs:
+            </div>
+            <select id="county-select" class="esri-select">
+                <option value="All">All Counties</option>
+                <option value="Austin">Austin County</option>
+                <option value="Brazoria">Brazoria County</option>
+                <option value="Chambers">Chambers County</option>
+                <option value="Colorado">Colorado County</option>
+                <option value="Fort Bend">Fort Bend County</option>
+                <option value="Galveston">Galveston County</option>
+                <option value="Harris">Harris County</option>
+                <option value="Liberty">Liberty County</option>
+                <option value="Matagorda">Matagorda County</option>
+                <option value="Montgomery">Montgomery County</option>
+                <option value="Walker">Walker County</option>
+                <option value="Waller">Waller County</option>
+                <option value="Wharton">Wharton County</option>
+            </select>
+            <hr>
+            <div style="margin-top: 10px; margin-left: 10px;">
+                <fieldset class="fieldset-checkbox">
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="totalJobs" checked>
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Total Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector1">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Agriculture, Forestry, Fishing and Hunting Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector2">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Mining, Quarrying, and Oil and Gas Extraction Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector3">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Utilities Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector4">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Construction Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector5">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Manufacturing Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector6">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Wholesale Trade Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector7">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Retail Trade Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector8">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Transportation and Warehousing Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector9">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Information Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector10">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Finance and Insurance Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector11">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Real Estate and Rental and Leasing Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector12">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Professional, Scientific, and Technical Services Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector13">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Management of Companies and Enterprises Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector14">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Administration & Support, Waste Management and Remediation Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector15">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Educational Services Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector16">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Health Care and Social Assistance Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector17">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Arts, Entertainment, and Recreation Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector18">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Accommodation and Food Services Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector19">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Other Services Jobs</span>
+                    </label>
+                    <label class="toggle-switch modifier-class">
+                        <input type="checkbox" class="toggle-switch-input" id="sector20">
+                        <span class="toggle-switch-track margin-right-1"></span>
+                        <span class="toggle-switch-label font-size--1">Public Administration Jobs</span>
+                    </label>
+                </fieldset>
+            </div>
+        </div>
+        
+        <div class="esri-component esri-home esri-widget--button esri-widget esri-icon-expand" id="time-slider-toggle"></div>
+
+        <script>require(["app/main"]);</script>
+    </body>
+</html>
