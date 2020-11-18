@@ -189,7 +189,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/core/watch
                     view = new MapView({
                         map: map,
                         container: "viewDiv",
-                        center: [-95.68333802343567, 29.726167367409502],
+                        center: [-95.97722230077761, 29.747631384641796],
                         zoom: 8,
                         constraints: {
                             minZoom: 8

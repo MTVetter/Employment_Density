@@ -27,7 +27,7 @@ import { sector1JobsButton, totalJobsButton, updateButtons, sector2JobsButton, s
         const view = new MapView({
             map,
             container: "viewDiv",
-            center: [-95.68333802343567, 29.726167367409502],
+            center: [-95.97722230077761, 29.747631384641796],
             zoom: 8,
             constraints: {
                 minZoom: 8
