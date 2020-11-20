@@ -28,7 +28,7 @@ const totalJobs = new SimpleRenderer({
 
 
 export const h1m = new FeatureLayer({
-    url: "https://gis.h-gac.com/arcgis/rest/services/Occupational_Analysis/H1M_Points/MapServer/0",
+    url: "https://gis.h-gac.com/arcgisdev/rest/services/CE/EmploymentDensity/MapServer/0",
     renderer: new SimpleRenderer({
         symbol: new SimpleMarkerSymbol({
             size: 1,
@@ -41,7 +41,7 @@ export const h1m = new FeatureLayer({
 });
 
 export const hotspots = new FeatureLayer({
-    url: "https://gis.h-gac.com/arcgis/rest/services/Occupational_Analysis/H1M_Points/MapServer/1",
+    url: "https://gis.h-gac.com/arcgisdev/rest/services/CE/EmploymentDensity/MapServer/1",
     renderer: new SimpleRenderer({
         symbol: new SimpleFillSymbol({
            outline: new SimpleLineSymbol({
