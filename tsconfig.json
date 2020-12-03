@@ -16,6 +16,10 @@
             "ES5",
             "ES2015.Promise",
             "DOM"
+        ],
+        "types": [
+            "arcgis-js-api",
+            "chart.js"
         ]
     },
     "include": [

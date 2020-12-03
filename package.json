@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/arcgis-js-api": "^4.17.0"
+    "@types/arcgis-js-api": "^4.17.0",
+    "@types/chart.js": "^2.9.28",
+    "chart.js": "^2.9.4",
+    "tslib": "^2.0.3"
   }
 }
