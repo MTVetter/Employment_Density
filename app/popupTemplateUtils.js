@@ -1,4 +1,4 @@
-define(["require", "exports", "esri/PopupTemplate", "esri/popup/content/TextContent", "esri/popup/content/MediaContent"], function (require, exports, PopupTemplate, TextContent, MediaContent) {
+define(["require", "exports", "esri/PopupTemplate", "esri/popup/content/TextContent", "esri/popup/content/MediaContent", "esri/popup/content/CustomContent"], function (require, exports, PopupTemplate, TextContent, MediaContent, CustomContent) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     function updatePopupTemplate(params) {
@@ -173,71 +173,79 @@ define(["require", "exports", "esri/PopupTemplate", "esri/popup/content/TextCont
         });
     }
     function createSector1PopupTemplate() {
-        // const charts = new CustomContent({
-        //     outFields: ["*"],
-        //     creator: function (event) {
-        //         console.log(event.graphic.attributes.County);
-        //         var data = {
-        //             datasets: [
-        //                 {
-        //                     data: [event.graphic.attributes.naics_s01_2009, event.graphic.attributes.naics_s01_2010, event.graphic.attributes.naics_s01_2011],
-        //                     backgroundColor: ["#d73347"],
-        //                     borderColor: "#d73347",
-        //                     fill: false,
-        //                     label: "Historic Trends of Agriculture, Forestry, Fishing and Hunting Jobs",
-        //                     pointBackgroundColor: "#d73347"
-        //                 }
-        //             ],
-        //             labels: ["2009", "2010", "2011"]
-        //         };
-        //         var myChart = new Chart(document.createElement("canvas"),{
-        //             type: "line",
-        //             data,
-        //             options: {
-        //                 tooltips: {
-        //                     mode: "index",
-        //                     intersect: false,
-        //                     callbacks: {
-        //                         label: function(tooltipItem, data){
-        //                             var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-        //                             return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        //                         }
-        //                     }
-        //                 },
-        //                 hover: {
-        //                     mode: "nearest",
-        //                     intersect: true
-        //                 },
-        //                 scales: {
-        //                     xAxes: [
-        //                         {
-        //                             display: true,
-        //                             scaleLabel: {
-        //                                 display: true,
-        //                                 labelString: "Year"
-        //                             }
-        //                         }
-        //                     ],
-        //                     yAxes: [
-        //                         {
-        //                             display: true,
-        //                             scaleLabel: {
-        //                                 display: true,
-        //                                 labelString: "Total Jobs"
-        //                             },
-        //                             ticks: {
-        //                                 callback: (value) => {
-        //                                     return parseFloat(value).toLocaleString();
-        //                                 }
-        //                             }
-        //                         }
-        //                     ]
-        //                 }
-        //             }
-        //         });
-        //         return myChart
-        //     }
-        // });
+        var charts = new CustomContent({
+            outFields: ["*"],
+            creator: function (event) {
+                var canvasDiv = document.createElement("div");
+                var canvas = document.createElement("canvas");
+                canvasDiv.appendChild(canvas);
+                var data = {
+                    datasets: [
+                        {
+                            data: [event.graphic.attributes.naics_s01_2009, event.graphic.attributes.naics_s01_2010, event.graphic.attributes.naics_s01_2011],
+                            backgroundColor: ["#d73347"],
+                            borderColor: "#d73347",
+                            fill: false,
+                            pointBackgroundColor: "#d73347"
+                        }
+                    ],
+                    labels: ["2009", "2010", "2011"]
+                };
+                var myChart = new Chart(canvas, {
+                    type: "line",
+                    data: data,
+                    options: {
+                        tooltips: {
+                            mode: "index",
+                            intersect: false,
+                            callbacks: {
+                                label: function (tooltipItem, data) {
+                                    var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                                }
+                            }
+                        },
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            display: true,
+                            text: "Historic Trends of Agriculture, Forestry, Fishing and Hunting jobs"
+                        },
+                        hover: {
+                            mode: "nearest",
+                            intersect: true
+                        },
+                        scales: {
+                            xAxes: [
+                                {
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "Year"
+                                    }
+                                }
+                            ],
+                            yAxes: [
+                                {
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: "Total Jobs"
+                                    },
+                                    ticks: {
+                                        callback: function (value) {
+                                            return parseFloat(value).toLocaleString();
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                });
+                return canvasDiv;
+            }
+        });
         return new PopupTemplate({
             title: "Agriculture, Forestry, Fishing and Hunting Jobs",
             outFields: ["*"],
@@ -245,16 +253,7 @@ define(["require", "exports", "esri/PopupTemplate", "esri/popup/content/TextCont
                 new TextContent({
                     text: "<b>{expression/sector1}</b> Agriculture, Forestry, Fishing and Hunting jobs"
                 }),
-                new MediaContent({
-                    mediaInfos: [{
-                            title: "Historical Jobs Amount",
-                            type: "line-chart",
-                            value: {
-                                fields: ["naics_s01_2009", "naics_s01_2010", "naics_s01_2011", "naics_s01_2012", "naics_s01_2013", "naics_s01_2014", "naics_s01_2015", "naics_s01_2016", "naics_s01_2017"],
-                                normalizeField: null
-                            }
-                        }]
-                })
+                charts
             ],
             fieldInfos: [
                 {
