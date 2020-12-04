@@ -23,7 +23,7 @@ define(["require", "exports", "esri/layers/FeatureLayer", "esri/renderers/Simple
         ]
     });
     exports.h1m = new FeatureLayer({
-        url: "https://gis.h-gac.com/arcgisdev/rest/services/CE/EmploymentDensity/MapServer/0",
+        url: "https://services1.arcgis.com/Z6SBWLWGRRejblAA/arcgis/rest/services/EmploymentDensity/FeatureServer/0",
         renderer: new SimpleRenderer({
             symbol: new SimpleMarkerSymbol({
                 size: 1,
@@ -35,7 +35,7 @@ define(["require", "exports", "esri/layers/FeatureLayer", "esri/renderers/Simple
         title: "Employment Density"
     });
     exports.hotspots = new FeatureLayer({
-        url: "https://gis.h-gac.com/arcgisdev/rest/services/CE/EmploymentDensity/MapServer/1",
+        url: "https://services1.arcgis.com/Z6SBWLWGRRejblAA/arcgis/rest/services/EmploymentDensity/FeatureServer/1",
         renderer: new SimpleRenderer({
             symbol: new symbols_1.SimpleFillSymbol({
                 outline: new symbols_1.SimpleLineSymbol({
