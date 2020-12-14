@@ -11,7 +11,7 @@ import FeatureLayerView = require("esri/views/layers/FeatureLayerView");
 import { formatNumber, convertNumberFormatToIntlOptions } from "esri/intl";
 import FeatureFilter = require("esri/views/layers/support/FeatureFilter");
 
-import { counties, h1m, hotspots } from "./layerUtils";
+import { counties, h1m, hotspots, hex } from "./layerUtils";
 import { updateRenderer, updateHotspots } from "./rendererUtils";
 import { updatePopupTemplate } from "./popupTemplateUtils";
 import { sector1JobsButton, totalJobsButton, updateButtons, sector2JobsButton, sector3JobsButton, sector4JobsButton, sector5JobsButton, sector6JobsButton, sector7JobsButton, sector8JobsButton, sector9JobsButton, sector10JobsButton, sector11JobsButton, sector12JobsButton, sector13JobsButton, sector14JobsButton, sector15JobsButton, sector16JobsButton, sector17JobsButton, sector18JobsButton, sector19JobsButton, sector20JobsButton, countySelect, checkButtons } from "./buttonUtils";
@@ -85,6 +85,7 @@ import { sector1JobsButton, totalJobsButton, updateButtons, sector2JobsButton, s
         map.add(counties);
         map.add(h1m);
         map.add(hotspots);
+        map.add(hex);
 
         //Filter Points
         let featureLayerView: FeatureLayerView = null;

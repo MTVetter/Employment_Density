@@ -239,6 +239,7 @@ define(["require", "exports", "esri/Map", "esri/views/MapView", "esri/core/watch
                     map.add(layerUtils_1.counties);
                     map.add(layerUtils_1.h1m);
                     map.add(layerUtils_1.hotspots);
+                    map.add(layerUtils_1.hex);
                     featureLayerView = null;
                     countyLayerView = null;
                     //Update the job numbers

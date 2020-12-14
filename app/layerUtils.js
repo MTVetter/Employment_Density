@@ -61,5 +61,19 @@ define(["require", "exports", "esri/layers/FeatureLayer", "esri/renderers/Simple
         }),
         outFields: ["*"]
     });
+    exports.hex = new FeatureLayer({
+        url: "https://services1.arcgis.com/Z6SBWLWGRRejblAA/arcgis/rest/services/CrashDensity_2019/FeatureServer/3",
+        legendEnabled: false,
+        renderer: new SimpleRenderer({
+            symbol: new symbols_1.SimpleFillSymbol({
+                color: "rgba(8,27,71,0)",
+                outline: new symbols_1.SimpleLineSymbol({
+                    color: "rgba(8,27,71, 0.15)",
+                    width: 0.5
+                })
+            })
+        }),
+        minScale: 72223.819286
+    });
 });
 //# sourceMappingURL=layerUtils.js.map

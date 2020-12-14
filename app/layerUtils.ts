@@ -68,3 +68,18 @@ export const counties = new FeatureLayer({
     }),
     outFields: ["*"]
 });
+
+export const hex = new FeatureLayer({
+    url: "https://services1.arcgis.com/Z6SBWLWGRRejblAA/arcgis/rest/services/CrashDensity_2019/FeatureServer/3",
+    legendEnabled: false,
+    renderer: new SimpleRenderer({
+        symbol: new SimpleFillSymbol({
+            color: "rgba(8,27,71,0)",
+            outline: new SimpleLineSymbol({
+                color: "rgba(8,27,71, 0.15)",
+                width: 0.5
+            })
+        })
+    }),
+    minScale: 72223.819286
+});
